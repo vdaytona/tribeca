@@ -66,11 +66,11 @@ export class OrdersComponent implements OnInit {
         if (params.value === 'Bid') return 'buy';
         else if (params.value === 'Ask') return "sell";
       }},
-      { width: 120, field: 'price', headerName: 'pxx',
+      { width: 120, field: 'price', headerName: 'px',
       sort: 'desc',  cellClass: (params) => {
         return (params.data.side === 'Ask') ? "sell" : "buy";
       }, cellRendererFramework: QuoteCurrencyCellComponent},
-      { width: 60, field: 'lvQty', headerName: 'qtyyy', cellClass: (params) => {
+      { width: 60, field: 'lvQty', headerName: 'qty', cellClass: (params) => {
         return (params.data.side === 'Ask') ? "sell" : "buy";
       }, cellRendererFramework: BaseCurrencyCellComponent},
       { width: 90, field: 'value', headerName: 'value', cellClass: (params) => {
