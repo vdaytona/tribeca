@@ -212,6 +212,27 @@ export class QuotingEngine {
           )) unrounded.bidPx = safety.sellPong - widthPong;
         }
 
+        // apr SizeTop mode, ignore the ping pong width, put quote on top to aggressviely rebalancing the position
+        // @ vdaytona
+        if (params.mode === Models.QuotingMode.PingPong || params.mode === Models.QuotingMode.HamelinRat || params.mode === Models.QuotingMode.Boomerang || params.mode === Models.QuotingMode.AK47) {
+          if (unrounded.askSz && safety.buyPing && (
+            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Sell')>-1)
+          )) {
+            unrounded.askPx = filteredMkt.asks[0].price - minTick;
+            if (unrounded.askPx === filteredMkt.bids[0].price) {
+              unrounded.askPx = filteredMkt.asks[0].price;
+            }
+          }
+          if (unrounded.bidSz && safety.sellPong && (
+            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Buy')>-1)
+          )) {
+            unrounded.bidPx = filteredMkt.bids[0].price + minTick;
+            if (unrounded.bidPx === filteredMkt.asks[0].price) {
+              unrounded.bidPx = filteredMkt.bids[0].price;
+            }
+        }
+        // SizeTop mode end
+
         if (params.bestWidth) {
           if (unrounded.askPx !== null)
             for (var fai = 0; fai < filteredMkt.asks.length; fai++)
