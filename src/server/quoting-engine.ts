@@ -230,6 +230,7 @@ export class QuotingEngine {
             if (unrounded.bidPx === filteredMkt.asks[0].price) {
               unrounded.bidPx = filteredMkt.bids[0].price;
             }
+          }
         }
         // SizeTop mode end
 
