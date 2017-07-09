@@ -219,7 +219,7 @@ export class QuotingEngine {
         console.info(new Date().toISOString().slice(11, -1), params.aggressivePositionRebalancing, Models.APR.SizeTop, sideAPR, unrounded.bidSz, safety.sellPong, unrounded.askSz, safety.buyPing );
         if (params.mode === Models.QuotingMode.PingPong || params.mode === Models.QuotingMode.HamelinRat || params.mode === Models.QuotingMode.Boomerang || params.mode === Models.QuotingMode.AK47) {
           if (unrounded.askSz && safety.buyPing && (
-            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Sell')>-1)
+            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Ask')>-1)
           )) {
             unrounded.askPx = filteredMkt.asks[0].price - minTick;
             if (unrounded.askPx === filteredMkt.bids[0].price) {
@@ -228,7 +228,7 @@ export class QuotingEngine {
             }
           }
           if (unrounded.bidSz && safety.sellPong && (
-            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Buy')>-1)
+            (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Bid')>-1)
           )) {
             unrounded.bidPx = filteredMkt.bids[0].price + minTick;
             if (unrounded.bidPx === filteredMkt.asks[0].price) {
