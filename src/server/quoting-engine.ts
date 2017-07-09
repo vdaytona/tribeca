@@ -216,6 +216,7 @@ export class QuotingEngine {
 
         // apr SizeTop mode, ignore the ping pong width, put quote on top to aggressviely rebalancing the position
         // @ vdaytona
+        console.info(new Date().toISOString().slice(11, -1), params.aggressivePositionRebalancing, Models.APR.SizeTop, sideAPR, unrounded.bidSz, safety.sellPong, unrounded.askSz, safety.buyPing );
         if (params.mode === Models.QuotingMode.PingPong || params.mode === Models.QuotingMode.HamelinRat || params.mode === Models.QuotingMode.Boomerang || params.mode === Models.QuotingMode.AK47) {
           if (unrounded.askSz && safety.buyPing && (
             (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Sell')>-1)
@@ -223,6 +224,7 @@ export class QuotingEngine {
             unrounded.askPx = filteredMkt.asks[0].price - minTick;
             if (unrounded.askPx === filteredMkt.bids[0].price) {
               unrounded.askPx = filteredMkt.asks[0].price;
+               console.info(new Date().toISOString().slice(11, -1), 'Calculating sizTop ask');
             }
           }
           if (unrounded.bidSz && safety.sellPong && (
@@ -231,11 +233,15 @@ export class QuotingEngine {
             unrounded.bidPx = filteredMkt.bids[0].price + minTick;
             if (unrounded.bidPx === filteredMkt.asks[0].price) {
               unrounded.bidPx = filteredMkt.bids[0].price;
+              console.info(new Date().toISOString().slice(11, -1), 'Calculating sizTop bid');
             }
           }
         }
 
+        console.info(new Date().toISOString().slice(11, -1), 'minTick', minTick);
+        console.info(new Date().toISOString().slice(11, -1), 'marketask0', filteredMkt.asks[0].price);
         console.info(new Date().toISOString().slice(11, -1), 'unroundedaskPx', unrounded.askPx);
+        console.info(new Date().toISOString().slice(11, -1), 'marketbid0', filteredMkt.bids[0].price);
         console.info(new Date().toISOString().slice(11, -1), 'unroundedbidPx', unrounded.bidPx);
         // SizeTop mode end
 
