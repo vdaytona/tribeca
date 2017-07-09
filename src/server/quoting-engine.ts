@@ -94,8 +94,7 @@ export class QuotingEngine {
 
         _timeProvider.setInterval(this.recalcQuote, moment.duration(1, "seconds"));
 
-        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedaskPx', this.recalcQuote.genQt.askPx);
-        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedbidPx', this.recalcQuote.genQt.bidPx);
+        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedaskPx', this.recalcQuote);
     }
 
     private computeQuote(filteredMkt: Models.Market, fv: Models.FairValue) {
