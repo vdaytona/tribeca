@@ -93,6 +93,9 @@ export class QuotingEngine {
         _safeties.NewValue.on(this.recalcQuote);
 
         _timeProvider.setInterval(this.recalcQuote, moment.duration(1, "seconds"));
+
+        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedaskPx', this.recalcQuote.genQt.askPx);
+        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedbidPx', this.recalcQuote.genQt.bidPx);
     }
 
     private computeQuote(filteredMkt: Models.Market, fv: Models.FairValue) {
@@ -232,6 +235,9 @@ export class QuotingEngine {
             }
           }
         }
+
+        console.info(new Date().toISOString().slice(11, -1), 'unroundedaskPx', unrounded.askPx);
+        console.info(new Date().toISOString().slice(11, -1), 'unroundedbidPx', unrounded.bidPx);
         // SizeTop mode end
 
         if (params.bestWidth) {
@@ -273,7 +279,7 @@ export class QuotingEngine {
         }
 
         if (unrounded.bidPx !== null) {
-            unrounded.bidPx = Utils.roundSide(unrounded.bidPx, minTick, Models.Side.Bid);
+            unrounded.bidPx = tbp recalculated.roundSide(unrounded.bidPx, minTick, Models.Side.Bid);
             unrounded.bidPx = Math.max(0, unrounded.bidPx);
         }
 
@@ -295,6 +301,9 @@ export class QuotingEngine {
                 ? totalQuotePosition : _unroundedAskSz;
             unrounded.bidSz = Utils.roundDown(Math.max(minSize, unrounded.bidSz), 1e-8);
         }
+
+        console.info(new Date().toISOString().slice(11, -1), 'return-unroundedaskPx', unrounded.askPx);
+        console.info(new Date().toISOString().slice(11, -1), 'return-unroundedbidPx', unrounded.bidPx);
 
         return unrounded;
     }
