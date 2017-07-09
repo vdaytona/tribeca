@@ -279,7 +279,7 @@ export class QuotingEngine {
         }
 
         if (unrounded.bidPx !== null) {
-            unrounded.bidPx = tbp recalculated.roundSide(unrounded.bidPx, minTick, Models.Side.Bid);
+            unrounded.bidPx = Utils.roundSide(unrounded.bidPx, minTick, Models.Side.Bid);
             unrounded.bidPx = Math.max(0, unrounded.bidPx);
         }
 
