@@ -93,8 +93,6 @@ export class QuotingEngine {
         _safeties.NewValue.on(this.recalcQuote);
 
         _timeProvider.setInterval(this.recalcQuote, moment.duration(1, "seconds"));
-
-        console.info(new Date().toISOString().slice(11, -1), 'recalculate-unroundedaskPx', this.recalcQuote);
     }
 
     private computeQuote(filteredMkt: Models.Market, fv: Models.FairValue) {
@@ -216,9 +214,6 @@ export class QuotingEngine {
 
         // apr SizeTop mode, ignore the ping pong width, put quote on top to aggressviely rebalancing the position
         // @ vdaytona
-        console.info(new Date().toISOString().slice(11, -1), params.aggressivePositionRebalancing, Models.APR.SizeTop, sideAPR, unrounded.bidSz, safety.sellPong, unrounded.askSz, safety.buyPing );
-        console.info(new Date().toISOString().slice(11, -1), sideAPR.indexOf('Ask')>-1);
-        console.info(new Date().toISOString().slice(11, -1), sideAPR.indexOf('Bid')>-1);
         if (params.mode === Models.QuotingMode.PingPong || params.mode === Models.QuotingMode.HamelinRat || params.mode === Models.QuotingMode.Boomerang || params.mode === Models.QuotingMode.AK47) {
           if (unrounded.askSz && (
             (params.aggressivePositionRebalancing === Models.APR.SizeTop && sideAPR.indexOf('Ask')>-1)
@@ -226,7 +221,6 @@ export class QuotingEngine {
             unrounded.askPx = filteredMkt.asks[0].price - minTick;
             if (unrounded.askPx === filteredMkt.bids[0].price) {
               unrounded.askPx = filteredMkt.asks[0].price;
-               console.info(new Date().toISOString().slice(11, -1), 'Calculating sizTop ask');
             }
           }
           if (unrounded.bidSz && (
@@ -235,16 +229,9 @@ export class QuotingEngine {
             unrounded.bidPx = filteredMkt.bids[0].price + minTick;
             if (unrounded.bidPx === filteredMkt.asks[0].price) {
               unrounded.bidPx = filteredMkt.bids[0].price;
-              console.info(new Date().toISOString().slice(11, -1), 'Calculating sizTop bid');
             }
           }
         }
-
-        console.info(new Date().toISOString().slice(11, -1), 'minTick', minTick);
-        console.info(new Date().toISOString().slice(11, -1), 'marketask0', filteredMkt.asks[0].price);
-        console.info(new Date().toISOString().slice(11, -1), 'unroundedaskPx', unrounded.askPx);
-        console.info(new Date().toISOString().slice(11, -1), 'marketbid0', filteredMkt.bids[0].price);
-        console.info(new Date().toISOString().slice(11, -1), 'unroundedbidPx', unrounded.bidPx);
         // SizeTop mode end
 
         if (params.bestWidth) {
@@ -308,9 +295,6 @@ export class QuotingEngine {
                 ? totalQuotePosition : _unroundedAskSz;
             unrounded.bidSz = Utils.roundDown(Math.max(minSize, unrounded.bidSz), 1e-8);
         }
-
-        console.info(new Date().toISOString().slice(11, -1), 'return-unroundedaskPx', unrounded.askPx);
-        console.info(new Date().toISOString().slice(11, -1), 'return-unroundedbidPx', unrounded.bidPx);
 
         return unrounded;
     }
